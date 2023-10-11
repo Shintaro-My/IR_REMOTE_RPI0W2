@@ -22,5 +22,6 @@ if __name__ == '__main__':
         pi.set_mode(15, pigpio.OUTPUT)
         pi.write(15, pigpio.HIGH)
         time.sleep(2)
+        pi.write(15, pigpio.LOW)
         pi.stop()
     
