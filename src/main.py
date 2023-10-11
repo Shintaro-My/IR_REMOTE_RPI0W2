@@ -19,9 +19,9 @@ if __name__ == '__main__':
     elif debug == 2:
         import pigpio, time
         pi = pigpio.pi()
-        pi.set_mode(15, pigpio.OUTPUT)
-        pi.write(15, pigpio.HIGH)
+        pi.set_mode(17, pigpio.OUTPUT)
+        pi.write(17, pigpio.HIGH)
         time.sleep(2)
-        pi.write(15, pigpio.LOW)
+        pi.write(17, pigpio.LOW)
         pi.stop()
     
