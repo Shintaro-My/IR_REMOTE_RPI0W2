@@ -319,7 +319,7 @@ class IRRP:
                 self.in_code = False
                 self._end_of_code()
 
-    def Record(self, GPIO:int, ID:list, file:str="", pre:int=None, post:int=None):
+    def Record_OLD(self, GPIO:int, ID:list, file:str="", pre:int=None, post:int=None):
 
         self.pi = pigpio.pi()  # Connect to Pi.
 
@@ -401,6 +401,51 @@ class IRRP:
             json.dumps(records, sort_keys=True).replace("],", "],\n") + "\n")
         f.close()
         self.pi.stop()  # Disconnect from Pi.
+        
+        
+    def Record(self, GPIO:int, ID:str, file:str="", pre:int=None, post:int=None):
+
+        self.pi = pigpio.pi()  # Connect to Pi.
+        self.GPIO = GPIO
+        if file:
+            FILE = file
+        else:
+            FILE = self.FILE
+        if pre:
+            self.PRE_MS = pre
+            self.PRE_US = self.PRE_MS * 1000
+        if post:
+            self.POST_MS = post
+            self.POST_US = self.POST_MS * 1000
+        try:
+            f = open(self.FILE, "r")
+            records = json.load(f)
+            f.close()
+        except:
+            records = {}
+        self.pi.set_mode(GPIO, pigpio.INPUT)  # IR RX connected to this GPIO.
+        self.pi.set_glitch_filter(GPIO, self.GLITCH)  # Ignore glitches.
+        cb = self.pi.callback(GPIO, pigpio.EITHER_EDGE, self._cbf)
+
+        print("Press key for '{}'".format(ID))
+        self.code = []
+        self.fetching_code = True
+        while self.fetching_code:
+            time.sleep(0.1)
+        print("Okay")
+        records[ID] = self.code[:]
+        time.sleep(0.5)
+
+        self.pi.set_glitch_filter(GPIO, 0)  # Cancel glitch filter.
+        self.pi.set_watchdog(GPIO, 0)  # Cancel watchdog.
+        self._tidy(records)
+        self._backup(FILE)
+        f = open(FILE, "w")
+        f.write(
+            json.dumps(records, sort_keys=True).replace("],", "],\n") + "\n")
+        f.close()
+        self.pi.stop()  # Disconnect from Pi.
+        return records
 
     def Playback(self, GPIO:int, ID:int, file:str=""):  # Playback.
 
