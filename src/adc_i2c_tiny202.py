@@ -14,4 +14,4 @@ if __name__ == '__main__':
     
     while True:
         print( adc.get() )
-        time.sleep(.25)
+        time.sleep(.1)
