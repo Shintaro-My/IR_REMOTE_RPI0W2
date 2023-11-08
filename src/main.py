@@ -9,18 +9,6 @@ def _sys_exit(signal, frame):
 
 
 if __name__ == '__main__':
-    n = len(sys.argv)
-    if n % 2 == 0 or n == 1:
-        raise Exception('引数の数が不正です。[ssid1, pass1, ssid2, pass2, ...]のように入力してください。')
-    networks = [create_pass(*sp, priority=i) for i, sp in enumerate(splitter(sys.argv[1:]))]
-    context = WPA_HEADER + '\n\n' + '\n'.join(networks) + '\n'
-    
-    with open('_temp.txt', 'w') as f:
-        f.write(context)
-    
-    print(context)
-
-if __name__ == '__main__':
     import sys
     debug = 1
     n = len(sys.argv)
