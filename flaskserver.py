@@ -41,7 +41,7 @@ def background_thread():
 @app.route('/<path:path>')
 def index(path):
     if path:
-        return send_from_directory('client/dist', path, async_mode=socketio.async_mode)
+        return send_from_directory('client/dist', path)
     return render_template('index.html', async_mode=socketio.async_mode)
 
 @socketio.event
