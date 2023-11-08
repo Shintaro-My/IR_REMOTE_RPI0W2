@@ -16,7 +16,7 @@ app = Flask(__name__,
 app.config.from_object(__name__)
 
 
-bp = Blueprint('util')
+bp = Blueprint('util', __name__)
 api = Api(bp)
 adc = ADC_I2C_TINY202()
 class CdsResource(Resource):
