@@ -7,8 +7,8 @@ ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__,
             static_url_path='/resource', 
-            static_folder='client/dist/resource',
-            template_folder='client/dist')
+            static_folder='./client/dist/resource',
+            template_folder='./client/dist')
 app.config.from_object(__name__)
 
 
