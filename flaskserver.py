@@ -28,6 +28,7 @@ api.add_resource(CdsResource, '/util/cds')
 app.register_blueprint(bp, url_prefix='/api')
 
 # WebSocket
+"""
 socketio = SocketIO(app, cors_allowed_origins='*')
 thread = None
 thread_lock = Lock()
@@ -35,6 +36,7 @@ def background_thread():
     while True:
         socketio.sleep(1)
         socketio.emit('cds', {'value': adc.get()})
+"""
 
 # クライアントサイドで使う画像ファイルなどは、client/publicフォルダに入れる
 @app.route('/', defaults={'path': ''})
@@ -42,8 +44,9 @@ def background_thread():
 def index(path):
     if path:
         return send_from_directory('client/dist', path)
-    return render_template('index.html', async_mode=socketio.async_mode)
+    return render_template('index.html') # , async_mode=socketio.async_mode
 
+"""
 @socketio.event
 def connect():
     global thread
@@ -51,7 +54,8 @@ def connect():
         if thread is None:
             thread = socketio.start_background_task(background_thread)
     emit('my_response', {'data': 'Connected', 'count': 0})
+"""
 
 if __name__ == '__main__':
     print(app.url_map)
-    socketio.run(app, debug=False, host='0.0.0.0', port=5555)
+    app.run(debug=False, host='0.0.0.0', port=5555)
