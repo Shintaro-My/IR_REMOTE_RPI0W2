@@ -3,6 +3,7 @@ import os
 
 ###### CONFIG ######
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
+EXPLAIN_TEMPLATE_LOADING = True
 ###### ###### ######
 
 app = Flask(__name__,
