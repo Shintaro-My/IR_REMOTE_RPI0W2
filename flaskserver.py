@@ -14,11 +14,11 @@ app.config.from_object(__name__)
 
 
 # クライアントサイドで使う画像ファイルなどは、client/publicフォルダに入れる
-#@app.route('/', defaults={'path': ''})
-#@app.route('/<path:path>')
-@app.route("/")
-def index(path=""):
-    # if path: return send_from_directory('client/dist', path)
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def index(path):
+    if path:
+        return send_from_directory('client/dist', path)
     return render_template('index.html')
 
 if __name__ == '__main__':
