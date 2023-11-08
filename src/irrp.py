@@ -438,6 +438,7 @@ class IRRP:
 
         self.pi.set_glitch_filter(GPIO, 0)  # Cancel glitch filter.
         self.pi.set_watchdog(GPIO, 0)  # Cancel watchdog.
+        print(records)
         self._tidy(records)
         self._backup(FILE)
         f = open(FILE, "w")
