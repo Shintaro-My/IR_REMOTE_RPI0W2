@@ -27,7 +27,7 @@ import time
 import json
 import os
 
-import pigpio  # http://abyz.co.uk/rpi/pigpio/python.html
+import pigpio # http://abyz.co.uk/rpi/pigpio/python.html
 
 
 class IRRP:

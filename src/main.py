@@ -7,7 +7,7 @@ def _sys_exit(signal, frame):
     sys.exit()
 
 if __name__ == '__main__':
-    debug = 1
+    debug = 0
     if debug == 0:
         ir = IRRP(file="ir.ircode", post=130, no_confirm=True)
         ir.Record(GPIO=18, ID="light:on")
