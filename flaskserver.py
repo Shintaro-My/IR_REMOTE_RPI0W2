@@ -1,5 +1,8 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, Blueprint, request, render_template, send_from_directory
+from flask_restful import Resource, Api
 import os
+
+from src.adc_i2c_tiny202 import ADC_I2C_TINY202
 
 ###### CONFIG ######
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -12,6 +15,17 @@ app = Flask(__name__,
             template_folder='client/dist')
 app.config.from_object(__name__)
 
+
+bp = Blueprint('util')
+api = Api(bp)
+adc = ADC_I2C_TINY202()
+class CdsResource(Resource):
+    def get(self):
+        return { 'value': adc.get() }
+
+api.add_resource(CdsResource, '/util/cds')
+
+app.register_blueprint(bp, url_prefix='/api')
 
 # クライアントサイドで使う画像ファイルなどは、client/publicフォルダに入れる
 @app.route('/', defaults={'path': ''})
