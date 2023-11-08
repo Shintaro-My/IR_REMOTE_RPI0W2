@@ -3,7 +3,7 @@ import os
 
 ###### CONFIG ######
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
-EXPLAIN_TEMPLATE_LOADING = True
+# EXPLAIN_TEMPLATE_LOADING = True
 ###### ###### ######
 
 app = Flask(__name__,
@@ -23,4 +23,4 @@ def index(path):
 
 if __name__ == '__main__':
     print(app.url_map)
-    app.run(debug=True, host='0.0.0.0', port=999)
+    app.run(debug=False, host='0.0.0.0', port=999)
