@@ -13,5 +13,9 @@ if __name__ == '__main__':
     adc = ADC_I2C_TINY202()
     
     while True:
-        print( adc.get() )
-        time.sleep(.1)
+        try:
+            print( adc.get() )
+            time.sleep(.1)
+        except KeyboardInterrupt:
+            print('abort.')
+            break
