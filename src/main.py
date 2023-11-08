@@ -10,7 +10,7 @@ def _sys_exit(signal, frame):
 
 if __name__ == '__main__':
     import sys
-    debug = 1
+    debug = 0
     
     if debug == 0:
         ir = IRRP(file="ir.ircode", post=130, no_confirm=True)
