@@ -41,7 +41,7 @@ if __name__ == '__main__':
     import sys
     print(sys.argv)
     
-    debug = 1
+    debug = 0
     
     db = DB()
     irrp = IRRP(no_confirm=True)
