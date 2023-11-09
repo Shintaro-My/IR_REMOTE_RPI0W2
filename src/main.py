@@ -1,4 +1,7 @@
 from irrp import IRRP
+from sqlite import DB
+import ir_string as irstr
+
 import signal
 import sys
 
@@ -9,18 +12,47 @@ def _sys_exit(signal, frame):
 
 sample = [3604, 1613, 569, 305, 569, 1178, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 1178, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 1178, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 1178, 569, 305, 569, 1178, 569, 1178, 569, 1178, 569, 1178, 569, 305, 569, 305, 569, 1178, 569, 305, 569, 1178, 569, 1178, 569, 1178, 569, 1178, 569, 305, 569, 1178, 569, 74322, 3604, 1613, 569, 305, 569, 1178, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 1178, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 1178, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 1178, 569, 305, 569, 1178, 569, 1178, 569, 1178, 569, 1178, 569, 305, 569, 305, 569, 1178, 569, 305, 569, 1178, 569, 1178, 569, 1178, 569, 1178, 569, 305, 569, 1178, 569, 74322, 3604, 1613, 569, 305, 569, 1178, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 1178, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 1178, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 305, 569, 1178, 569, 305, 569, 1178, 569, 1178, 569, 1178, 569, 1178, 569, 305, 569, 305, 569, 1178, 569, 305, 569, 1178, 569, 1178, 569, 1178, 569, 1178, 569, 305, 569, 1178, 569]
 
+
+def init_irdb(db: DB):
+    db.run([
+    """
+    CREATE TABLE IF NOT EXISTS IRTable(
+        Key   TEXT PRIMARY KEY,
+        Value TEXT
+    )
+    """
+    ])
+
+def get_all_ir(db: DB):
+    results, = db.run(["SELECT * FROM IRTable"])
+    print(results)
+    
+def set_ir(db: DB, name: str, value: str):
+    db.run([
+    f"""
+    INSERT INTO Test (Key, Value)
+    VALUES (\"{name}\", \"{value}\")
+    ON CONFLICT(Key)
+    DO UPDATE SET Value=\"{value}\"
+    """
+    ])
+
 if __name__ == '__main__':
     import sys
     debug = 1
     
-    ir = IRRP(no_confirm=True)
+    db = DB()
+    irrp = IRRP(no_confirm=True)
+    
     if debug == 0:
-        result = ir.Record(GPIO=18, post=130)
-        ir.stop()
+        result = irrp.Record(GPIO=18, post=130)
+        irrp.stop()
         print(result)
+        set_ir( db, 'test', irstr.encode(result) )
+        get_all_ir(db)
     elif debug == 1:
-        ir.Playback(GPIO=17, data=sample)
-        ir.stop()
+        irrp.Playback(GPIO=17, data=sample)
+        irrp.stop()
     elif debug == 2:
         import pigpio, time
         pi = pigpio.pi()
@@ -30,3 +62,4 @@ if __name__ == '__main__':
         pi.write(17, pigpio.LOW)
         pi.stop()
     
+    db.terminate()

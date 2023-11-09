@@ -6,14 +6,13 @@ DB_NAME = 'database.db'
 class DB:
     def __init__(self, name=DB_NAME) -> None:
         self.db_name = name
-        self.conn = None
-        self.cur = None
+        self.setup()
         
-    def _setup(self):
+    def setup(self):
         self.conn = sqlite3.connect(self.db_name)
         self.cur = self.conn.cursor()
         
-    def _terminate(self):
+    def terminate(self):
         self.cur.close()
         self.conn.close()
         
@@ -25,8 +24,6 @@ class DB:
             self.conn.commit()
         except Exception as e:
             print(e)
-        finally:
-            self._terminate()
         return results
     
         
