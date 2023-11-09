@@ -39,6 +39,8 @@ def set_ir(db: DB, name: str, value: str):
 
 if __name__ == '__main__':
     import sys
+    print(sys.argv)
+    
     debug = 1
     
     db = DB()
