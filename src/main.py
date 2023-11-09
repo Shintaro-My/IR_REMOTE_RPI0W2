@@ -6,19 +6,19 @@ def _sys_exit(signal, frame):
     print('abort')
     sys.exit()
 
-
+sample = [3605, 1675, 499, 371, 499, 1235, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 1235, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 1235, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 371, 499, 1235, 499, 371, 499, 1235, 499, 1235, 499, 1235, 499, 1235, 499, 371, 499, 371, 499, 1235, 499, 371, 499, 1235, 499, 1235, 499, 1235, 499, 1235, 499, 371, 499, 1235, 600]
 
 if __name__ == '__main__':
     import sys
     debug = 0
     
+    ir = IRRP(no_confirm=True)
     if debug == 0:
-        ir = IRRP(file="ir.ircode", post=130, no_confirm=True)
-        ir.Record(GPIO=18, ID="light:on")
+        result = ir.Record(GPIO=18, post=130)
         ir.stop()
+        print(result)
     elif debug == 1:
-        ir = IRRP(file="ir.ircode", no_confirm=True)
-        ir.Playback(GPIO=17, ID="light:on")
+        ir.Playback(GPIO=17, data=sample)
         ir.stop()
     elif debug == 2:
         import pigpio, time

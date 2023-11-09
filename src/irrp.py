@@ -435,7 +435,7 @@ class IRRP:
         self.pi.stop()  # Disconnect from Pi.
         return records['value']
 
-    def Playback(self, GPIO:int, ID:int, file:str=""):  # Playback.
+    def Playback_OLD(self, GPIO:int, ID:int, file:str=""):  # Playback.
 
         self.pi = pigpio.pi()  # Connect to Pi.
 
@@ -516,6 +516,69 @@ class IRRP:
                 spaces_wid = {}
             else:
                 print("Id {} not found".format(arg))
+
+        self.pi.stop()  # Disconnect from Pi.
+
+    def Playback(self, GPIO:int, data):  # Playback.
+
+        self.pi = pigpio.pi()  # Connect to Pi.
+
+        self.pi.set_mode(GPIO, pigpio.OUTPUT)  # IR TX connected to this GPIO.
+
+        self.pi.wave_add_new()
+
+        emit_time = time.time()
+
+        if self.VERBOSE:
+            print("Playing")
+
+        self.code = data
+
+        # Create wave
+
+        marks_wid = {}
+        spaces_wid = {}
+
+        wave = [0] * len(self.code)
+
+        for i in range(0, len(self.code)):
+            ci = self.code[i]
+            if i & 1:  # Space
+                if ci not in spaces_wid:
+                    self.pi.wave_add_generic([pigpio.pulse(0, 0, ci)])
+                    spaces_wid[ci] = self.pi.wave_create()
+                wave[i] = spaces_wid[ci]
+            else:  # Mark
+                if ci not in marks_wid:
+                    wf = self._carrier(GPIO, self.FREQ, ci)
+                    self.pi.wave_add_generic(wf)
+                    marks_wid[ci] = self.pi.wave_create()
+                wave[i] = marks_wid[ci]
+
+        delay = emit_time - time.time()
+
+        if delay > 0.0:
+            time.sleep(delay)
+
+        self.pi.wave_chain(wave)
+
+        if self.VERBOSE:
+            print("key " + arg)
+
+        while self.pi.wave_tx_busy():
+            time.sleep(0.002)
+
+        emit_time = time.time() + self.GAP_S
+
+        for i in marks_wid:
+            self.pi.wave_delete(marks_wid[i])
+
+        marks_wid = {}
+
+        for i in spaces_wid:
+            self.pi.wave_delete(spaces_wid[i])
+
+        spaces_wid = {}
 
         self.pi.stop()  # Disconnect from Pi.
 
