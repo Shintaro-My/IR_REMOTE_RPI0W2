@@ -55,13 +55,5 @@ if __name__ == '__main__':
     elif debug == 1:
         irrp.Playback(GPIO=17, data=sample)
         irrp.stop()
-    elif debug == 2:
-        import pigpio, time
-        pi = pigpio.pi()
-        pi.set_mode(17, pigpio.OUTPUT)
-        pi.write(17, pigpio.HIGH)
-        time.sleep(2)
-        pi.write(17, pigpio.LOW)
-        pi.stop()
     
     db.terminate()
