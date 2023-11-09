@@ -20,7 +20,8 @@ def _zip(text: str):
 def _unzip(text: str):
     b = b85decode(text)
     return decompress(b).decode()
- 
+
+"""
 def encode(data: list[int]):
     return _zip("".join([_enc(n) for n in data]))
 
@@ -28,3 +29,11 @@ def decode(string: str):
     raw = _unzip(string)
     if len(raw) % 4: raise Exception('invalid code')
     return [_dec( raw[x:x+4] ) for x in range(0, len(raw), 4)]
+"""
+
+def encode(data: list[int]):
+    return _zip(":".join([str(n) for n in data]))
+
+def decode(string: str):
+    raw = _unzip(string)
+    return [int(x) for x in raw.split(':')]
