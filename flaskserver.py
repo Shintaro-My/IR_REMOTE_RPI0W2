@@ -3,7 +3,7 @@ from flask import Flask, render_template, send_from_directory
 import os
 from threading import Lock
 
-from flask_bp import cds
+from flask_bp import cds, irdb
 
 ###### CONFIG ######
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -19,6 +19,7 @@ app.config.from_object(__name__)
 
 # API
 app.register_blueprint(cds.bp, url_prefix='/api') # /api/cds
+app.register_blueprint(irdb.bp, url_prefix='/api') # /api/ir
 
 
 # クライアントサイドで使う画像ファイルなどは、client/publicフォルダに入れる
