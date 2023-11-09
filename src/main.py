@@ -30,7 +30,7 @@ def get_all_ir(db: DB):
 def set_ir(db: DB, name: str, value: str):
     db.run([
     f"""
-    INSERT INTO Test (Key, Value)
+    INSERT INTO IRTable (Key, Value)
     VALUES (\"{name}\", \"{value}\")
     ON CONFLICT(Key)
     DO UPDATE SET Value=\"{value}\"
@@ -45,8 +45,9 @@ if __name__ == '__main__':
     
     db = DB()
     irrp = IRRP(no_confirm=True)
-    
     try:
+        init_irdb(db)
+        
         if debug == 0:
             result = irrp.Record(GPIO=18, post=130)
             irrp.stop()
