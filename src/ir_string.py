@@ -22,9 +22,9 @@ def _unzip(text: str):
     return decompress(b).decode()
  
 def encode(data: list[int]):
-    return _zip(_zip("".join([_enc(n) for n in data])))
+    return _zip("".join([_enc(n) for n in data]))
 
 def decode(string: str):
-    raw = _unzip(_unzip(string))
+    raw = _unzip(string)
     if len(raw) % 4: raise Exception('invalid code')
     return [_dec( raw[x:x+4] ) for x in range(0, len(raw), 4)]
