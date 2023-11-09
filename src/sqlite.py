@@ -19,7 +19,6 @@ class DB:
     def run(self, queries):
         results = []
         try:
-            self._setup()
             results = [[v for v in self.cur.execute(query.strip())] for query in queries]
             self.conn.commit()
         except Exception as e:
