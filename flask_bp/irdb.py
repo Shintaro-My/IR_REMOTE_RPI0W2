@@ -28,6 +28,6 @@ def get_all_ir():
 
 class CdsResource(Resource):
     def get(self):
-        return get_all_ir(db)
+        return get_all_ir()
     
 api.add_resource(CdsResource, '/ir')
