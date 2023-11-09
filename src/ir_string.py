@@ -1,12 +1,21 @@
 from __future__ import annotations
+from base64 import b64decode as bdec, b64encode as benc
 
-def _fmt(n):
-    if n < 0 or 0xFFFF <= n: raise Exception('out of range')
-    return "%0.4X" % n
+DIGIT = 5
+
+def _enc(n):
+    if n < 0 or int('F' * DIGIT, 16) <= n: raise Exception('out of range')
+    return benc( n.to_bytes(3, 'big') ).decode()
+
+def _dec(s):
+    try:
+        return int.from_bytes( bdec( s.encode() ), 'big' )
+    except:
+        raise Exception('invalid code')
 
 def encode(data: list[int]):
-    return "".join([_fmt(n) for n in data])
+    return "".join([_enc(n) for n in data])
 
 def decode(string: str):
     if len(string) % 4: raise Exception('invalid code')
-    return [int(string[x:x+4], 16) for x in range(0, len(string), 4)]
+    return [_dec( string[x:x+4] ) for x in range(0, len(string), 4)]
