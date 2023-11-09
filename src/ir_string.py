@@ -9,4 +9,4 @@ def encode(data: list[int]):
 
 def decode(string: str):
     if len(string) % 4: raise Exception('invalid code')
-    return [int(string[x:x+3], 16) for x in range(0, len(string), 3)]
+    return [int(string[x:x+4], 16) for x in range(0, len(string), 4)]
