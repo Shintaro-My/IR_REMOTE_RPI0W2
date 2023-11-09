@@ -9,4 +9,4 @@ adc = ADC_I2C_TINY202()
 class CdsResource(Resource):
     def get(self):
         return { 'value': adc.get() }
-api.add_resource(CdsResource, '/util/cds')
+api.add_resource(CdsResource, '/cds')
