@@ -32,7 +32,7 @@ import pigpio # http://abyz.co.uk/rpi/pigpio/python.html
 
 class IRRP:
     def __init__(self,
-                 file: str,
+                # file: str,
                  freq: float = 38.0,
                  gap: int = 100,
                  glitch: int = 100,
@@ -44,7 +44,7 @@ class IRRP:
                  no_confirm: bool = False):
 
         self.GPIO = None
-        self.FILE = file              #Filename
+        self.FILE = "" # file              #Filename
 
         self.FREQ = freq              #frequency kHz
 
