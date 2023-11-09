@@ -46,14 +46,19 @@ if __name__ == '__main__':
     db = DB()
     irrp = IRRP(no_confirm=True)
     
-    if debug == 0:
-        result = irrp.Record(GPIO=18, post=130)
-        irrp.stop()
-        print(result)
-        set_ir( db, 'test', irstr.encode(result) )
-        get_all_ir(db)
-    elif debug == 1:
-        irrp.Playback(GPIO=17, data=sample)
-        irrp.stop()
-    
-    db.terminate()
+    try:
+        if debug == 0:
+            result = irrp.Record(GPIO=18, post=130)
+            irrp.stop()
+            print(result)
+            set_ir( db, 'test', irstr.encode(result) )
+            get_all_ir(db)
+        elif debug == 1:
+            irrp.Playback(GPIO=17, data=sample)
+            irrp.stop()
+    except KeyboardInterrupt:
+        print('abort.')
+    except Exception as e:
+        print(e)
+    finally:
+        db.terminate()
