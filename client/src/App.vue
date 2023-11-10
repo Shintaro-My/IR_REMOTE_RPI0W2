@@ -3,7 +3,8 @@ import { ref } from "vue";
 import { RouterLink, RouterView } from 'vue-router'
 
 const luminance = ref(0);
-setTimeout(async () => {
+
+setInterval(async () => {
   let num = 0;
   try {
     const req = await fetch('/api/cds');
@@ -12,7 +13,7 @@ setTimeout(async () => {
     console.log(e);
   }
   luminance.value = num;
-}, 1000);
+}, 500);
 </script>
 
 <template>
