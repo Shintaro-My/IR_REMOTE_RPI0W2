@@ -41,18 +41,8 @@ def set_ir(name: str, value: str):
     db.terminate()
     
 class IRResource(Resource):
-    def get(self, code):
-        data = get_all_ir()
-        query = request.args.to_dict()
-        print(code)
-        if 'key' in query:
-            key = query['key']
-            if key in data:
-                irrp.Playback(GPIO=17, data=data[key])
-                irrp.stop()
-                return {'type': 'success', 'data': data[key]}
-            return {'type': 'error'}
-        return data
+    def get(self):
+        return get_all_ir()
     
     def post(self):
         body = request.json
@@ -67,4 +57,14 @@ class IRResource(Resource):
         
         return {'type': 'success', 'data': result}
     
-api.add_resource(IRResource, '/ir/<string:code>')
+class IRItemResource(Resource):
+    def get(self, key):
+        data = get_all_ir()
+        if key in data:
+            irrp.Playback(GPIO=17, data=data[key])
+            irrp.stop()
+            return {'type': 'success', 'data': data[key]}
+        return {'type': 'error'}
+    
+api.add_resource(IRResource, '/ir')
+api.add_resource(IRItemResource, '/ir/<string:key>')
