@@ -41,9 +41,10 @@ def set_ir(name: str, value: str):
     db.terminate()
     
 class IRResource(Resource):
-    def get(self):
+    def get(self, code):
         data = get_all_ir()
         query = request.args.to_dict()
+        print(code)
         if 'key' in query:
             key = query['key']
             if key in data:
@@ -66,4 +67,4 @@ class IRResource(Resource):
         
         return {'type': 'success', 'data': result}
     
-api.add_resource(IRResource, '/ir')
+api.add_resource(IRResource, '/ir/<string:code>')
