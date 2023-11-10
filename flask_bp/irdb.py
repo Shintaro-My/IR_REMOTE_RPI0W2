@@ -26,7 +26,7 @@ def get_all_ir():
     db.terminate()
     data = {}
     for res in sorted(results, key=lambda r: r[0]):
-        data[res[0]] = decode(res[1])
+        data[res[0]] = {'value': decode(res[1]), 'desc': res[2]}
     return data
 
 def set_ir(name: str, value: str, desc: str):
