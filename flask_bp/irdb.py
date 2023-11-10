@@ -44,8 +44,9 @@ class IRResource(Resource):
     def get(self):
         data = get_all_ir()
         parser = reqparse.RequestParser()
-        parser.add_argument('key', type=str)
+        parser.add_argument('key', required=False, type=str)
         query = parser.parse_args()
+        print(query)
         if 'key' in query:
             key = query['key']
             if key in data:
@@ -54,6 +55,7 @@ class IRResource(Resource):
                 return {'type': 'success', 'data': data[key]}
             return {'type': 'error'}
         return data
+    
     def post(self):
         body = request.json
         if body is None or 'name' not in body:
