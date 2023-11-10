@@ -26,8 +26,10 @@ def get_all_ir():
         data[res[0]] = decode(res[1])
     return data
 
-class CdsResource(Resource):
+class IRResource(Resource):
     def get(self):
-        return get_all_ir()
+        data = get_all_ir()
+        print(data)
+        return data
     
-api.add_resource(CdsResource, '/ir')
+api.add_resource(IRResource, '/ir')
