@@ -51,8 +51,6 @@ def remove_ir(name: str):
     ])
     db.terminate()
     
-    
-    
 class IRResource(Resource):
     def get(self):
         return get_all_ir()
