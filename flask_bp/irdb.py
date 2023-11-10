@@ -13,7 +13,8 @@ db.run([
 """
 CREATE TABLE IF NOT EXISTS IRTable(
     Key   TEXT PRIMARY KEY,
-    Value TEXT
+    Value TEXT,
+    Desc  Text
 )
 """
 ])
@@ -28,14 +29,14 @@ def get_all_ir():
         data[res[0]] = decode(res[1])
     return data
 
-def set_ir(name: str, value: str):
+def set_ir(name: str, value: str, desc: str):
     db = DB()
     db.run([
     f"""
-    INSERT INTO IRTable (Key, Value)
+    INSERT INTO IRTable (Key, Value, Desc)
     VALUES (\"{name}\", \"{value}\")
     ON CONFLICT(Key)
-    DO UPDATE SET Value=\"{value}\"
+    DO UPDATE SET Value=\"{value}\", Desc=\"{desc}\"
     """
     ])
     db.terminate()
@@ -60,13 +61,11 @@ class IRResource(Resource):
         body = request.json
         if body is None or 'name' not in body:
             return {'type': 'error'}
-        
         key = body['name']
+        desc = body['desc'] if 'desc' in body else ''
         result = irrp.Record(GPIO=18, post=130)
         irrp.stop()
-        print(result)
-        set_ir( key, encode(result) )
-        
+        set_ir( key, encode(result), desc )
         return {'type': 'success', 'data': result}
     
 class IRItemResource(Resource):
