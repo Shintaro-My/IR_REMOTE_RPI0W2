@@ -44,7 +44,6 @@ class IRResource(Resource):
     def get(self):
         data = get_all_ir()
         query = request.args.to_dict()
-        print(query)
         if 'key' in query:
             key = query['key']
             if key in data:
