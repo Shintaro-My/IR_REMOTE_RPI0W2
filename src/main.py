@@ -32,7 +32,7 @@ def set_ir(db: DB, name: str, value: str, desc: str):
     db.run([
     f"""
     INSERT INTO IRTable (Key, Value, Desc)
-    VALUES (\"{name}\", \"{value}\")
+    VALUES (\"{name}\", \"{value}\", \"{desc}\")
     ON CONFLICT(Key)
     DO UPDATE SET Value=\"{value}\", Desc=\"{desc}\"
     """
