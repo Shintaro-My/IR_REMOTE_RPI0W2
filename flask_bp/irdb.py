@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse
 
 from src.sqlite import DB
 from src.ir_string import encode, decode
@@ -43,7 +43,16 @@ def set_ir(name: str, value: str):
 class IRResource(Resource):
     def get(self):
         data = get_all_ir()
-        print(data)
+        parser = reqparse.RequestParser()
+        parser.add_argument('key', type=str)
+        query = parser.parse_args()
+        if 'key' in query:
+            key = query['key']
+            if key in data:
+                irrp.Playback(GPIO=17, data=data[key])
+                irrp.stop()
+                return {'type': 'success', 'data': data[key]}
+            return {'type': 'error'}
         return data
     def post(self):
         body = request.json
