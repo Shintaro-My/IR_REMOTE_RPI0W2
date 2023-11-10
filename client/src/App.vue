@@ -31,10 +31,7 @@ setInterval(async () => {
         <button class="btn btn-radius-solid" @click="console.log">ドアを開錠する</button>
       </div>
       <nav>
-        <RouterLink to="/anonymous">未登録ID</RouterLink>
-        <RouterLink to="/backup">システムバックアップ</RouterLink>
-        <RouterLink to="/config">設定</RouterLink>
-        <RouterLink to="/shutdown">システム終了</RouterLink>
+        <RouterLink to="/anonymous">信号一覧</RouterLink>
       </nav>
     </div>
   </header>

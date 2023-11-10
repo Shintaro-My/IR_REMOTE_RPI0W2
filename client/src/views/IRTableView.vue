@@ -24,7 +24,7 @@
       <template #expand="item">
         <div class="memo">
           <div>
-            <span class="bold">value: </span>
+            <span class="bold">value ({{ item.value.length }}): </span>
             <div class="signal">
               <span class="signal_item" v-for="(sig, i) in item.value" v-bind:key="i">{{ sig }}</span>
             </div>
@@ -182,6 +182,22 @@ h1 {
 
 h3 {
   font-size: 1.2rem;
+}
+
+.signal {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 3.85em);
+}
+.signal_item {
+  background: #f6f6f6;
+  box-shadow: 1px 1px 0.1em #aaa;
+  color: #666;
+  display: inline-block;
+  font-family: courier, monospace;
+  font-weight: bold;
+  margin: 0.2em;
+  padding: 0.1em 0.1em;
+  text-align: right;
 }
 
 .greetings h1,
