@@ -72,7 +72,7 @@ class IRItemResource(Resource):
     def get(self, key):
         data = get_all_ir()
         if key in data:
-            irrp.Playback(GPIO=17, data=data[key])
+            irrp.Playback(GPIO=17, data=data[key]['value'])
             irrp.stop()
             return {'type': 'success', 'data': data[key]}
         return {'type': 'error'}
