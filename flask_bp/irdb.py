@@ -74,6 +74,14 @@ class IRItemResource(Resource):
             irrp.stop()
             return {'type': 'success', 'data': data[key]}
         return {'type': 'error'}
+    def put(self, key):
+        data = get_all_ir()
+        if key in data:
+            body = request.json
+            desc = body['desc'] if 'desc' in body else ''
+            set_ir(key, encode(data[key]['value']), desc)
+            return {'type': 'success'}
+        return {'type': 'error'}
     def delete(self, key):
         data = get_all_ir()
         if key in data:

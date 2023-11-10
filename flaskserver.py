@@ -21,7 +21,7 @@ app.config.from_object(__name__)
 
 # API
 app.register_blueprint(cds.bp, url_prefix='/api') # /api/cds
-app.register_blueprint(irdb.bp, url_prefix='/api') # /api/ir
+app.register_blueprint(irdb.bp, url_prefix='/api') # /api/ir, /api/ir/<key>
 
 
 # クライアントサイドで使う画像ファイルなどは、client/publicフォルダに入れる
