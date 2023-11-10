@@ -1,4 +1,5 @@
 from flask import Flask, render_template, send_from_directory
+from flask_cors import CORS
 #from flask_socketio import SocketIO, send, emit
 import os
 from threading import Lock
@@ -14,6 +15,7 @@ app = Flask(__name__,
             static_url_path='/resource', 
             static_folder='client/dist/resource',
             template_folder='client/dist')
+CORS(app)
 app.config.from_object(__name__)
 
 
