@@ -28,7 +28,7 @@ def get_all_ir():
         data[res[0]] = decode(res[1])
     return data
 
-def set_ir(db: DB, name: str, value: str):
+def set_ir(name: str, value: str):
     db = DB()
     db.run([
     f"""
