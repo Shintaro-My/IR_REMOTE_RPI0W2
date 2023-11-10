@@ -11,6 +11,13 @@ h1 {
   font-weight: normal;
 }
 
+.luminance > .value {
+  color: #265539;
+  font-size: 1.3em;
+  font-weight: bold;
+  text-align: center;
+}
+
 a {
   cursor: pointer;
 }
