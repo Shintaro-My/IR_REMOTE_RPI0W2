@@ -25,7 +25,7 @@ def get_all_ir():
     results, = db.run(["SELECT * FROM IRTable"])
     db.terminate()
     data = {}
-    for res in results:
+    for res in sorted(results, key=lambda r: r[0]):
         data[res[0]] = decode(res[1])
     return data
 
