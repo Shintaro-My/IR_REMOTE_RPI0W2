@@ -39,6 +39,18 @@ def set_ir(name: str, value: str):
     """
     ])
     db.terminate()
+
+def remove_ir(name: str):
+    db = DB()
+    db.run([
+    f"""
+    DELETE FROM IRTable
+    WHERE Key=\"{name}\"
+    """
+    ])
+    db.terminate()
+    
+    
     
 class IRResource(Resource):
     def get(self):
@@ -64,6 +76,12 @@ class IRItemResource(Resource):
             irrp.Playback(GPIO=17, data=data[key])
             irrp.stop()
             return {'type': 'success', 'data': data[key]}
+        return {'type': 'error'}
+    def delete(self, key):
+        data = get_all_ir()
+        if key in data:
+            remove_ir(key)
+            return {'type': 'success'}
         return {'type': 'error'}
     
 api.add_resource(IRResource, '/ir')
