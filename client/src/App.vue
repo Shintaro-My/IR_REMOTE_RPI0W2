@@ -3,14 +3,17 @@ import { ref } from "vue";
 import { RouterLink, RouterView } from 'vue-router'
 
 const luminance = ref(0);
+const luminance_millis = ref(0);
 const active = ref(true)
 
 const _ = (async()=>{
   while (active.value) {
-    let num = 0;
+    let num = NaN;
     try {
       const req = await fetch('/api/cds');
-      num = (await req.json())?.value || NaN;
+      const { value, millis } = await req.json();
+      num = value || NaN;
+      luminance_millis.value = millis;
     } catch(e) {
       console.log(e);
     }
@@ -28,7 +31,7 @@ console.log(_);
     <!--<img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />-->
 
     <div class="luminance">
-      <div class="value">
+      <div class="value" :data-millis="luminance_millis">
         {{ luminance }}
       </div>
     </div>
