@@ -60,6 +60,21 @@ header {
   width: 150px;
 }
 
+.luminance > .value {
+  animation: blink .35s both;
+  color: #265539;
+  font-size: 1.3em;
+  font-weight: bold;
+  text-align: center;
+}
+@keyframes blink {
+  0%, 10% {
+    color: #00bd7e;
+  }
+  70%, 100% {
+    color: #265539;
+  }
+}
 
 nav {
   width: 100%;
