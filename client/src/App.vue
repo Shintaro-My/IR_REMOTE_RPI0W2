@@ -35,9 +35,11 @@ console.log(_);
     </div>
     
     <div class="wrapper">
+      <!--
       <div class="util">
         <button class="btn btn-radius-solid" @click="console.log">ドアを開錠する</button>
       </div>
+      -->
       <nav>
         <RouterLink to="/irtable">信号一覧</RouterLink>
       </nav>

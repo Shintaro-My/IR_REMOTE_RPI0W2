@@ -45,6 +45,22 @@
 
     <a @click="deleteMulti()" v-if="itemsSelected.length">{{ itemsSelected.length }} 件のアイテムを削除</a>
 
+    <div v-if="create_visible" class="darkbox">
+      <h3>Creating "<pre class="inline">{{ newItem.key }}</pre>":</h3>
+      <div>
+        <div>key :<Multiselect
+          v-model="newItem._key"
+          :options="getList(newItem._key)"
+          mode="tags"
+        /></div>
+        <div>desc:<input type="text" v-model="newItem.desc" /></div>
+      </div>
+      <div class="btns">
+        <button @click="_save()">Save</button>
+        <button @click="close_save()">Cancel</button>
+      </div>
+    </div>
+
     <div v-if="edit_visible" class="darkbox">
       <h3>Editing "<pre class="inline">{{ editingItem.key }}</pre>":</h3>
       <div>
@@ -69,6 +85,7 @@
 
 <script setup>
 import { ref, reactive } from "vue";
+import Multiselect from '@vueform/multiselect';
 // defineProps(/*{msg: String}*/)
 const headers = [
   { text: 'key', value: 'key', sortable: true },
@@ -78,11 +95,14 @@ const headers = [
 const itemsSelected = ref([]);
 const items = ref([]);
 
+let dict = {};
+
 const loading = ref(false);
 
 const searchField = ref('key')
 const searchValue = ref('');
 
+const create_visible = ref(false);
 const edit_visible = ref(false);
 const delete_visible = ref(false);
 
@@ -102,9 +122,31 @@ const update = async () => {
     return { key: v, ...json[v] }
   });
   loading.value = false;
+
+  dict = {};
+  for(const name of Object.keys(json)) {
+    let tgt = dict;
+    for(const n of name.split(':')) {
+        tgt[n] = tgt[n] || {};
+        tgt = tgt[n];
+    }
+  }
   return true;
 }
 
+const getList = names => {
+    let tgt = dict;
+    for(const n of names) {
+        if (!(tgt = tgt?.[n])) return [];
+    }
+    return Object.keys(tgt);
+}
+
+// getList(['NEC', 'CEILING_LIGHT', 'a']);
+
+const close_save = () => {
+  create_visible.value = false;
+}
 const close_edit = () => {
   edit_visible.value = false;
 }
@@ -120,6 +162,32 @@ const sendIR = async (key) => {
     return false;
   }
   loading.value = false;
+}
+
+const newItem = reactive({
+  _key: [],
+  desc: ''
+});
+const _save = async () => {
+  const { _key, desc } = newItem;
+  const key = _key.join(':');
+  const debug = true;
+  if (debug) return console.log(newItem);
+  if (!key) return alert('アイテム名は空欄にできません')
+  loading.value = true;
+  const req = await fetch('/api/ir/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ key, desc })
+  });
+  if (req.status != 200) {
+    alert('Communication failed.');
+    return false;
+  }
+  close_save();
+  await update();
 }
 
 const editingItem = reactive({
