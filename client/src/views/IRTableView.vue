@@ -112,6 +112,24 @@ const create_visible = ref(false);
 const edit_visible = ref(false);
 const delete_visible = ref(false);
 
+const setList = names => {
+  console.log('a', names)
+  let dict = {};
+  for(const name of items.value.map(v => v.key)) {
+    let tgt = dict;
+    for(const n of name.split(':')) {
+        tgt[n] = tgt[n] || {};
+        tgt = tgt[n];
+    }
+  }
+  let tgt = dict;
+  for(const i in names) {
+    console.log('b', names[i], tgt);
+    if (!(tgt = tgt?.[names[i]])) break;
+  }
+  newitem_key_option.value = Object.keys(tgt || {});
+}
+
 /*type IRItem = {
   value: number[],
   desc : string
@@ -128,25 +146,10 @@ const update = async () => {
     return { key: v, ...json[v] }
   });
   loading.value = false;
+  setList({});
   return true;
 }
 
-const setList = names => {
-  let dict = {};
-  for(const name of items.value.map(v => v.key)) {
-    let tgt = dict;
-    for(const n of name.split(':')) {
-        tgt[n] = tgt[n] || {};
-        tgt = tgt[n];
-    }
-  }
-  let tgt = dict;
-  for(const i in names) {
-    console.log('b', names[i], tgt);
-    if (!(tgt = tgt?.[names[i]])) break;
-  }
-  newitem_key_option.value = Object.keys(tgt || {});
-}
 
 // getList(['NEC', 'CEILING_LIGHT', 'a']);
 
