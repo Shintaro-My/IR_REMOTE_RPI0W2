@@ -14,8 +14,8 @@
       :loading="loading"
       alternating
     >
-      <template #item-key="item">
-        <a @click="sendIR(item)">送出</a>
+      <template #item-key="{ key }">
+        <a @click="sendIR(key)">{{ key }}</a>
       </template>
 
       <template #item-operation="item">
@@ -104,8 +104,7 @@ const close_delete = () => {
   delete_visible.value = false;
 }
 
-const sendIR = async (item) => {
-  const { key } = item;
+const sendIR = async (key) => {
   loading.value = true;
   const req = await fetch(`/api/ir/${key}`);
   if (req.status != 200) {
