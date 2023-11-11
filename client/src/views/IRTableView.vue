@@ -4,7 +4,7 @@
     <h1>信号一覧</h1>
 
     <a @click="update()">最新の情報に更新する</a>
-    
+    <input type="text" :value="searchValue" />
     <EasyDataTable
       show-index
       v-model:items-selected="itemsSelected"
@@ -12,6 +12,9 @@
       :headers="headers"
       :items="items"
       :loading="loading"
+      :rows-per-page="10"
+      search-field="key"
+      :search-value="searchValue"
       alternating
     >
       <template #item-key="{ key }">
@@ -74,6 +77,8 @@ const itemsSelected = ref([]);
 const items = ref([]);
 
 const loading = ref(false);
+
+const searchValue = ref('');
 
 const edit_visible = ref(false);
 const delete_visible = ref(false);
