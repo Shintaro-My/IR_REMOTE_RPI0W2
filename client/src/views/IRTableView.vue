@@ -14,9 +14,12 @@
       :loading="loading"
       alternating
     >
+      <template #item-key="item">
+        <a @click="sendIR(item)">送出</a>
+      </template>
+
       <template #item-operation="item">
         <div class="operation-wrapper">
-          <div><a @click="sendIR(item)">送出</a></div>
           <div><a @click="editItem(item)">編集</a></div>
           <div><a @click="deleteItem(item)">削除</a></div>
         </div>
