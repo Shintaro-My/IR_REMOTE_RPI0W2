@@ -13,7 +13,7 @@
       :items="items"
       :loading="loading"
       :rows-per-page="10"
-      search-field="key"
+      :search-field="searchField"
       :search-value="searchValue"
       alternating
     >
@@ -78,6 +78,7 @@ const items = ref([]);
 
 const loading = ref(false);
 
+const searchField = ref('key')
 const searchValue = ref('');
 
 const edit_visible = ref(false);
