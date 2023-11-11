@@ -16,6 +16,7 @@
     >
       <template #item-operation="item">
         <div class="operation-wrapper">
+          <div><a @click="sendIR(item)">送出</a></div>
           <div><a @click="editItem(item)">編集</a></div>
           <div><a @click="deleteItem(item)">削除</a></div>
         </div>
@@ -98,6 +99,17 @@ const close_edit = () => {
 }
 const close_delete = () => {
   delete_visible.value = false;
+}
+
+const sendIR = async (item) => {
+  const { key } = item;
+  loading.value = true;
+  const req = await fetch(`/api/ir/${key}`);
+  if (req.status != 200) {
+    alert('Communication failed.');
+    return false;
+  }
+  loading.value = false;
 }
 
 const editingItem = reactive({
