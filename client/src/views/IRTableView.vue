@@ -53,7 +53,8 @@
         <div>key :<Multiselect
           v-model="newItem._key"
           :options="getList(newItem._key)"
-          mode="tags"
+          :close-on-select="true"
+          :multiple="true"
         /></div>
         <div>desc:<input type="text" v-model="newItem.desc" /></div>
       </div>
