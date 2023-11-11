@@ -53,8 +53,9 @@
         <div>key :<Multiselect
           v-model="newItem._key"
           :options="getList(newItem._key)"
-          :close-on-select="true"
-          :multiple="true"
+          mode="tags"
+          :searchable="true"
+          :createTag="true"
         /></div>
         <div>desc:<input type="text" v-model="newItem.desc" /></div>
       </div>
@@ -89,6 +90,7 @@
 <script setup>
 import { ref, reactive } from "vue";
 import Multiselect from '@vueform/multiselect';
+import '@vueform/multiselect/themes/default.css';
 // defineProps(/*{msg: String}*/)
 const headers = [
   { text: 'key', value: 'key', sortable: true },
