@@ -52,10 +52,11 @@
       <div>
         <div>key :<Multiselect
           v-model="newItem._key"
-          :options="getList(newItem._key)"
+          :options="newitem_key_option"
           mode="tags"
           :searchable="true"
           :createTag="true"
+          @change="setList(newItem._key)"
         /></div>
         <div>desc:<input type="text" v-model="newItem.desc" /></div>
       </div>
@@ -100,6 +101,8 @@ const headers = [
 const itemsSelected = ref([]);
 const items = ref([]);
 
+const newitem_key_option = ref([]);
+
 const loading = ref(false);
 
 const searchField = ref('key')
@@ -128,7 +131,7 @@ const update = async () => {
   return true;
 }
 
-const getList = names => {
+const setList = names => {
   let dict = {};
   for(const name of items.value.map(v => v.key)) {
     let tgt = dict;
@@ -140,9 +143,9 @@ const getList = names => {
   let tgt = dict;
   for(const i in names) {
     console.log('b', names[i], tgt);
-    if (!(tgt = tgt?.[names[i]])) return [];
+    if (!(tgt = tgt?.[names[i]])) break;
   }
-  return Object.keys(tgt);
+  newitem_key_option.value = Object.keys(tgt || {});
 }
 
 // getList(['NEC', 'CEILING_LIGHT', 'a']);
