@@ -100,8 +100,6 @@ const headers = [
 const itemsSelected = ref([]);
 const items = ref([]);
 
-let dict = {};
-
 const loading = ref(false);
 
 const searchField = ref('key')
@@ -127,23 +125,21 @@ const update = async () => {
     return { key: v, ...json[v] }
   });
   loading.value = false;
+  return true;
+}
 
-  dict = {};
-  for(const name of Object.keys(json)) {
+const getList = names => {
+  let dict = {};
+  for(const name of items.value.map(v => v.key)) {
     let tgt = dict;
     for(const n of name.split(':')) {
         tgt[n] = tgt[n] || {};
         tgt = tgt[n];
     }
   }
-  return true;
-}
-
-const getList = names => {
-  console.log('a', names);
   let tgt = dict;
   for(const i in names) {
-    console.log('b', i);
+    console.log('b', names[i], tgt);
     if (!(tgt = tgt?.[names[i]])) return [];
   }
   return Object.keys(tgt);
