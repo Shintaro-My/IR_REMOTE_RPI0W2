@@ -140,6 +140,7 @@ const update = async () => {
 }
 
 const getList = names => {
+  console.log(names);
     let tgt = dict;
     for(const n of names) {
         if (!(tgt = tgt?.[n])) return [];
