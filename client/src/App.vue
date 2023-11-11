@@ -10,7 +10,7 @@ const _ = (async()=>{
     let num = 0;
     try {
       const req = await fetch('/api/cds');
-      num = (await req.json())?.value || 0;
+      num = (await req.json())?.value || NaN;
     } catch(e) {
       console.log(e);
     }
