@@ -140,12 +140,11 @@ const update = async () => {
 }
 
 const getList = names => {
-  console.log(names);
-    let tgt = dict;
-    for(const n of names) {
-        if (!(tgt = tgt?.[n])) return [];
-    }
-    return Object.keys(tgt);
+  let tgt = dict;
+  for(const i in names) {
+      if (!(tgt = tgt?.[names[i]])) return [];
+  }
+  return Object.keys(tgt);
 }
 
 // getList(['NEC', 'CEILING_LIGHT', 'a']);
