@@ -3,8 +3,10 @@
 
     <h1>信号一覧</h1>
 
-    <a @click="update()">最新の情報に更新する</a>
-    <input type="text" :value="searchValue" />
+    <div class="table-custom-util">
+      <a @click="update()">最新の情報に更新する</a>
+      <input type="text" v-model="searchValue" />
+    </div>
     <EasyDataTable
       show-index
       v-model:items-selected="itemsSelected"
