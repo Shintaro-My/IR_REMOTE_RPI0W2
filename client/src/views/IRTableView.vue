@@ -142,6 +142,7 @@ const update = async () => {
     }
   }
   dict.value = { ..._dict };
+  opt.value = getList([]);
   return true;
 }
 
@@ -267,10 +268,6 @@ const deleteMulti = async () => {
   close_delete();
   await update();
 }
-
-update().then(() => {
-  opt.value = getList([]);
-});
 
 </script>
 
