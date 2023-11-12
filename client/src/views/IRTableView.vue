@@ -150,7 +150,6 @@ const getList = names => {
   console.log('a', names);
   let tgt = { ...dict.value };
   for(const i in names) {
-    console.log('b', names[i], tgt);
     if (!(tgt = tgt?.[names[i]])) return [];
   }
   return Object.keys(tgt);
