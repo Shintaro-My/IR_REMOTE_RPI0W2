@@ -186,7 +186,7 @@ const _save = async () => {
   const key = _key.join(':');
   if (!key) return alert('アイテム名は空欄にできません')
   loading.value = true;
-  const req = await fetch('/api/ir/', {
+  const req = await fetch('/api/ir', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
