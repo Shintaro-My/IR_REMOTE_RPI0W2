@@ -58,6 +58,7 @@
           :createTag="true"
           @select="opt = getList(newItem._key)"
           @deselect="opt = getList(newItem._key)"
+          class="multi_select"
         /></div>
         <div>desc:<input type="text" v-model="newItem.desc" /></div>
       </div>
@@ -327,6 +328,9 @@ h3 {
   height: 3em;
   justify-content: space-evenly;
   padding: 1em 0 0;
+}
+.multi_select {
+  color: #265539;
 }
 @media (min-width: 1024px) {
   .greetings h1,
