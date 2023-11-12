@@ -2,11 +2,14 @@
 import { ref } from "vue";
 import { RouterLink, RouterView } from 'vue-router'
 
-const luminance = ref(0);
-const active = ref(true)
+const luminance = ref(NaN);
+const _run = ref(true);
+const active = ref(false);
 
 const _ = (async()=>{
-  while (active.value) {
+  while (_run.value) {
+    await new Promise(r => setTimeout(r, 1000));
+    if (!active.value) continue;
     let num = NaN;
     try {
       const req = await fetch('/api/cds');
@@ -16,7 +19,6 @@ const _ = (async()=>{
       console.log(e);
     }
     luminance.value = num;
-    await new Promise(r => setTimeout(r, 1000));
   }
   return true;
 })();
@@ -35,11 +37,9 @@ console.log(_);
     </div>
     
     <div class="wrapper">
-      <!--
       <div class="util">
-        <button class="btn btn-radius-solid" @click="console.log">ドアを開錠する</button>
+        <button class="btn btn-radius-solid" @click="active = !active">{{ active ? '停止' : '取得' }}</button>
       </div>
-      -->
       <nav>
         <RouterLink to="/irtable">信号一覧</RouterLink>
       </nav>
