@@ -268,6 +268,8 @@ const deleteMulti = async () => {
   await update();
 }
 
+update()
+
 </script>
 
 
