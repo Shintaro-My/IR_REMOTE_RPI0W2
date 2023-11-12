@@ -56,7 +56,8 @@
           mode="tags"
           :searchable="true"
           :createTag="true"
-          @change="opt = getList(newItem._key)"
+          @select="opt = getList(newItem._key)"
+          @deselect="opt = getList(newItem._key)"
         /></div>
         <div>desc:<input type="text" v-model="newItem.desc" /></div>
       </div>
