@@ -52,11 +52,11 @@
       <div>
         <div>key :<Multiselect
           v-model="newItem._key"
-          :options="newitem_key_option"
+          :options="opt"
           mode="tags"
           :searchable="true"
           :createTag="true"
-          @change="setList(newItem._key)"
+          @change="opt = getList(newItem._key)"
         /></div>
         <div>desc:<input type="text" v-model="newItem.desc" /></div>
       </div>
@@ -98,10 +98,12 @@ const headers = [
   { text: 'desc', value: 'desc', sortable: true },
   { text: '_', value: 'operation' }
 ]
+
+const dict = ref({});
+const opt = ref([]);
+
 const itemsSelected = ref([]);
 const items = ref([]);
-
-const newitem_key_option = ref([]);
 
 const loading = ref(false);
 
@@ -111,24 +113,6 @@ const searchValue = ref('');
 const create_visible = ref(false);
 const edit_visible = ref(false);
 const delete_visible = ref(false);
-
-const setList = names => {
-  console.log('a', names)
-  let dict = {};
-  for(const name of items.value.map(v => v.key)) {
-    let tgt = dict;
-    for(const n of name.split(':')) {
-        tgt[n] = tgt[n] || {};
-        tgt = tgt[n];
-    }
-  }
-  let tgt = dict;
-  for(const i in names) {
-    console.log('b', names[i], tgt);
-    if (!(tgt = tgt?.[names[i]])) break;
-  }
-  newitem_key_option.value = Object.keys(tgt || {});
-}
 
 /*type IRItem = {
   value: number[],
@@ -146,10 +130,28 @@ const update = async () => {
     return { key: v, ...json[v] }
   });
   loading.value = false;
-  setList({});
+
+  const _dict = {};
+  for(const name of Object.keys(json)) {
+    let tgt = _dict;
+    for(const n of name.split(':')) {
+        tgt[n] = tgt[n] || {};
+        tgt = tgt[n];
+    }
+  }
+  dict.value = { ..._dict };
   return true;
 }
 
+const getList = names => {
+  console.log('a', names);
+  let tgt = { ...dict.value };
+  for(const i in names) {
+    console.log('b', names[i], tgt);
+    if (!(tgt = tgt?.[names[i]])) return [];
+  }
+  return Object.keys(tgt);
+}
 
 // getList(['NEC', 'CEILING_LIGHT', 'a']);
 
@@ -266,7 +268,8 @@ const deleteMulti = async () => {
   await update();
 }
 
-update();
+await update();
+opt.value = getList([]);
 
 </script>
 
