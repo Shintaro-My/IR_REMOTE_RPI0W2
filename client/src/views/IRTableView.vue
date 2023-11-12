@@ -184,8 +184,6 @@ const newItem = reactive({
 const _save = async () => {
   const { _key, desc } = newItem;
   const key = _key.join(':');
-  const debug = true;
-  if (debug) return console.log(newItem);
   if (!key) return alert('アイテム名は空欄にできません')
   loading.value = true;
   const req = await fetch('/api/ir/', {
