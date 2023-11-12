@@ -183,15 +183,15 @@ const newItem = reactive({
 });
 const _save = async () => {
   const { _key, desc } = newItem;
-  const key = _key.join(':');
-  if (!key) return alert('アイテム名は空欄にできません')
+  const name = _key.join(':');
+  if (!name) return alert('アイテム名は空欄にできません')
   loading.value = true;
   const req = await fetch('/api/ir', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ key, desc })
+    body: JSON.stringify({ name, desc })
   });
   if (req.status != 200) {
     alert('Communication failed.');
