@@ -56,25 +56,26 @@ header {
 }
 
 .luminance {
+  align-items: center;
+  background: #265539;
+  border-radius: 150px;
+  box-shadow: 1px 1px 3px #aaa, 0px 1px 3px #aaa;
+  display: flex;
   height: 150px;
+  justify-content: center;
+  margin: 0.35em;
   width: 150px;
 }
 
 .luminance > .value {
-  animation: blink .35s both;
-  color: #265539;
+  color: #fff;
+  font-family: courier, monospace;
   font-size: 1.3em;
   font-weight: bold;
   text-align: center;
+  text-shadow: 1px 1px 2px #333;
 }
-@keyframes blink {
-  0%, 10% {
-    color: #00bd7e;
-  }
-  70%, 100% {
-    color: #265539;
-  }
-}
+
 
 nav {
   width: 100%;

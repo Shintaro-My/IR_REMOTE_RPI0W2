@@ -1,9 +1,9 @@
 <template>
   <div class="wrap">
 
-    <button class="btn btn-radius-solid" @click="create_visible = true">新規登録</button>
-
     <h1>信号一覧</h1>
+
+    <button class="btn btn-radius-solid" @click="create_visible = true">新規登録</button>
 
     <div class="table-custom-util">
       <input type="text" v-model="searchValue" placeholder="SEARCH" />
