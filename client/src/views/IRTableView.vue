@@ -268,8 +268,9 @@ const deleteMulti = async () => {
   await update();
 }
 
-await update();
-opt.value = getList([]);
+update().then(() => {
+  opt.value = getList([]);
+});
 
 </script>
 
