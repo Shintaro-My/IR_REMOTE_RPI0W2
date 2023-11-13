@@ -143,6 +143,7 @@ const update = async () => {
   }
   dict.value = { ..._dict };
   opt.value = getList([]);
+  newItem._key = [];
   return true;
 }
 
