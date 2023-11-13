@@ -16,13 +16,18 @@ def setIP():
     global TARGET_IP
     TARGET_IP = None
     while not TARGET_IP:
-        TARGET_IP = getDefaultGateway()
+        try:
+            TARGET_IP = getDefaultGateway()
+            print(f'SET IP: {TARGET_IP}')
+        except Exception as e:
+            print(e)
         time.sleep(30)
 
 def main():
     setIP()
     while True:
-        res = subprocess.run(['ping', '-c', '1', TARGET_IP])
+        res = subprocess.run(['ping', '-c', '1', TARGET_IP], stdout=subprocess.DEVNULL)
+        print(f'PING: {TARGET_IP}')
         code = res.returncode # 0: success, 1: failed
         if code:
             subprocess.run(['sudo', 'ifconfig', 'wlan0', 'up'])
