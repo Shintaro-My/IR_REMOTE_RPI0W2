@@ -27,8 +27,8 @@ def main():
     setIP()
     while True:
         res = subprocess.run(['ping', '-c', '1', TARGET_IP], stdout=subprocess.DEVNULL)
-        print(f'PING: {TARGET_IP}')
         code = res.returncode # 0: success, 1: failed
+        print(f'PING: {TARGET_IP}, EXIT={code}')
         if code:
             subprocess.run(['sudo', 'ifconfig', 'wlan0', 'up'])
             time.sleep(10)
