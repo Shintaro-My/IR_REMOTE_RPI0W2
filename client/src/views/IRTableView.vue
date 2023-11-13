@@ -48,7 +48,7 @@
     <a @click="deleteMulti()" v-if="itemsSelected.length">{{ itemsSelected.length }} 件のアイテムを削除</a>
 
     <div v-if="create_visible" class="darkbox">
-      <h3>Creating "<pre class="inline">{{ newItem.key }}</pre>":</h3>
+      <h3>Creating "<pre class="inline">{{ newItem._key.join(':') }}</pre>":</h3>
       <div>
         <div>key :<Multiselect
           v-model="newItem._key"
@@ -316,7 +316,7 @@ h3 {
   left: 0;
   right: 0;
   margin: auto;
-  max-width: 400px;
+  max-width: 450px;
   padding: 0.75em 1em;
   z-index: 3;
 }
@@ -328,6 +328,9 @@ h3 {
 }
 .multi_select {
   color: #265539;
+  --ms-tag-font-size: .7em;
+  --ms-tag-px: .25em;
+  --ms-tag-py: .15em;
 }
 @media (min-width: 1024px) {
   .greetings h1,
