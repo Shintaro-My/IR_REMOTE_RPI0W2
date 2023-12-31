@@ -21,6 +21,9 @@ CORS(app)
 app.config.from_object(__name__)
 
 if not DEBUG:
+    import logging
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.ERROR)
     app.logger.disabled = True
 
 # API
@@ -38,5 +41,5 @@ def index(path):
 
 
 if __name__ == '__main__':
-    print(app.url_map)
+    if DEBUG: print(app.url_map)
     app.run(debug=DEBUG, host='0.0.0.0', port=5555)
