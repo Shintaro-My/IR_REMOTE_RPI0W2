@@ -30,7 +30,7 @@ console.log(_);
   <header>
     <!--<img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />-->
 
-    <div class="luminance">
+    <div class="luminance" :style="`--val: ${luminance / 10}`">
       <div class="value">
         {{ luminance }}
       </div>
@@ -56,8 +56,9 @@ header {
 }
 
 .luminance {
+  --val: 0;
   align-items: center;
-  background: #265539;
+  background: rgb(100, 40, calc(var(--val) * 2 + 20));
   border-radius: 150px;
   box-shadow: 1px 1px 3px #aaa, 0px 1px 3px #aaa;
   display: flex;
