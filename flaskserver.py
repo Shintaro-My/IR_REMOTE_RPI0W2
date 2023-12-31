@@ -8,8 +8,10 @@ from flask_bp import cds, irdb
 
 ###### CONFIG ######
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
+DEBUG = False
 # EXPLAIN_TEMPLATE_LOADING = True
 ###### ###### ######
+
 
 app = Flask(__name__,
             static_url_path='/resource', 
@@ -18,6 +20,8 @@ app = Flask(__name__,
 CORS(app)
 app.config.from_object(__name__)
 
+if not DEBUG:
+    app.logger.disabled = True
 
 # API
 app.register_blueprint(cds.bp, url_prefix='/api') # /api/cds
@@ -35,4 +39,4 @@ def index(path):
 
 if __name__ == '__main__':
     print(app.url_map)
-    app.run(debug=False, host='0.0.0.0', port=5555)
+    app.run(debug=DEBUG, host='0.0.0.0', port=5555)
