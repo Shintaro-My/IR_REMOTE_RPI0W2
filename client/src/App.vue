@@ -58,7 +58,7 @@ header {
 .luminance {
   --val: 0;
   align-items: center;
-  background: rgb(100, 40, calc(var(--val) * 2 + 20));
+  background: rgb(120, 80, calc(var(--val) * 2 + 20));
   border-radius: 150px;
   box-shadow: 1px 1px 3px #aaa, 0px 1px 3px #aaa;
   display: flex;
